@@ -4,11 +4,14 @@ import Login from './Login/';
 import GlobalStyle from './styles/global';
 import reportWebVitals from './reportWebVitals';
 
+
 ReactDOM.render(
-  <React.StrictMode>
-    <Login />
+  <>
+      <React.StrictMode>
+        <Login />
+      </React.StrictMode>
     <GlobalStyle />
-  </React.StrictMode>,
+  </>,
   document.getElementById('root')
 );
 
