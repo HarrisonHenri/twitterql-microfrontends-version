@@ -38,7 +38,7 @@ module.exports = {
         shell: "shell",
       },
       exposes: {
-        "./Home": "./src/HomeContent",
+        "./Home": "./src/HomeWrapper",
       },
       shared: {
         ...deps,

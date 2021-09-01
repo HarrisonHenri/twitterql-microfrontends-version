@@ -10,13 +10,13 @@ import { Redirect, Route } from 'react-router-dom';
 import { useAuth } from './auth';
 
 export const PrivateRoute = ({ component: Component, ...rest }: any) => {
-  const { userId } = useAuth();
+  const { token } = useAuth();
 
   return (
     <Route
       {...rest}
       render={props => {
-        return userId ? <Component {...props} /> : <Redirect to="/" />;
+        return token ? <Component {...props} /> : <Redirect to="/" />;
       }}
     />
   );

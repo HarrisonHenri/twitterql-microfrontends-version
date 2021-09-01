@@ -8,11 +8,10 @@ import React, {
 
 interface AuthState {
   token: string;
-  userId: string;
 }
 
 interface AuthContextData {
-  userId: string;
+  token: string;
   signIn(state: AuthState): void;
   signOut(): void;
 }
@@ -25,20 +24,18 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     function loadStorageData(): void {
       const token = window.localStorage.getItem('token');
-      const userId = window.localStorage.getItem('userId');
 
-      if (token && userId) {
-        setData({ token, userId });
+      if (token) {
+        setData({ token });
       }
     }
 
     loadStorageData();
   }, []);
 
-  const signIn = useCallback(({ userId, token }) => {
+  const signIn = useCallback(({ token }) => {
     window.localStorage.setItem('token', token);
-    window.localStorage.setItem('userId', userId);
-    setData({ token, userId });
+    setData({ token });
   }, []);
 
   const signOut = useCallback(() => {
@@ -49,7 +46,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ userId: data.userId, signIn, signOut }}>
+    <AuthContext.Provider value={{ token: data.token, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

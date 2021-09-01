@@ -16,12 +16,12 @@ const FrameRouter: React.FC<{ children: any; path: string }> = ({
   children,
   path = 'home',
 }) => {
-  const { userId } = useAuth();
+  const { token } = useAuth();
 
   return (
     <Router>
       <Switch>
-        {userId && (
+        {token && (
           <Route exact path="/">
             <Redirect to={path} />
           </Route>

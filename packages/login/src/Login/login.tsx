@@ -25,8 +25,7 @@ const LoginForm = () => {
         email: values.email,
         password: values.password,
       }})
-      console.log(data)
-      signIn({ userId:data.signIn.user.id, token:data.signIn.token })
+      signIn({ token:data.signIn.token })
       push("/home")
     },
     [signIn,push,signInMutation],

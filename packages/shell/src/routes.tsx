@@ -8,12 +8,12 @@ import { useAuth } from './auth';
 import { PrivateRoute } from './private-route';
 
 const Routes: React.FC = () => {
-  const { userId } = useAuth();
+  const { token } = useAuth();
 
   return (
     <BrowserRouter>
       <Switch>
-        {userId && (
+        {token && (
           <Route exact path="/">
             <Redirect to="/home" />
           </Route>
