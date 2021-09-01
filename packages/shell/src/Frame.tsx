@@ -1,18 +1,16 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from 'react';
+import { AuthProvider } from './auth';
+import FrameRouter from './FrameRouter';
 
-import Login from "login/Login";
-
-const Frame = ({ children, path = "home" }: {children: any, path?: string}) => {
-return (  <Router>
-    <Switch>
-      <Route path="/" exact>
-        <Login />
-      </Route>
-      <Route path={path}>
-        {children}
-      </Route>
-    </Switch>    
-  </Router>)
+const Frame: React.FC<{ children: any; path: string }> = ({
+  children,
+  path = 'home',
+}) => {
+  return (
+    <AuthProvider>
+      <FrameRouter path={path}>{children}</FrameRouter>
+    </AuthProvider>
+  );
 };
 
 export default Frame;

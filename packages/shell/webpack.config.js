@@ -1,12 +1,13 @@
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const path = require('path');
 
-const deps = require("./package.json").dependencies;
+const deps = require('./package.json').dependencies;
+
 module.exports = {
   entry: './src/index.ts',
   output: {
-    publicPath: "http://localhost:8080/",
+    publicPath: 'http://localhost:8080/',
   },
   mode: 'development',
 
@@ -31,30 +32,34 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "shell",
-      filename: "remoteEntry.js",
+      name: 'shell',
+      filename: 'remoteEntry.js',
       library: { type: 'var', name: 'shell' },
       exposes: {
-        "./Frame": "./src/Frame",
+        './Frame': './src/Frame',
+        './auth': './src/auth',
       },
       remotes: {
-        home: "home",
-        login: "login",
+        home: 'home',
+        login: 'login',
       },
-      shared: {
-        ...deps,
-        react: {
-          singleton: true,
-          requiredVersion: deps.react,
+      shared: [
+        {
+          ...deps,
+          react: {
+            singleton: true,
+            requiredVersion: deps.react,
+          },
+          'react-dom': {
+            singleton: true,
+            requiredVersion: deps['react-dom'],
+          },
         },
-        "react-dom": {
-          singleton: true,
-          requiredVersion: deps["react-dom"],
-        },
-      },
+        './src/auth',
+      ],
     }),
     new HtmlWebPackPlugin({
-      template: "./public/index.html",
+      template: './public/index.html',
     }),
   ],
 };

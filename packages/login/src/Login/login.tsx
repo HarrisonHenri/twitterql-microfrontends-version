@@ -6,6 +6,7 @@ import { Input } from "../components/Input"
 import { SignInMutation } from "../services/SignInMutation";
 import { Container, FormContainer } from "./styles"
 import { useHistory } from 'react-router-dom';
+import {useAuth} from 'shell/auth'
 
 const initialValues = {
   email: '',
@@ -14,19 +15,21 @@ const initialValues = {
 
 const LoginForm = () => {
   const {push} = useHistory()
+  const {signIn} = useAuth()
 
-  const [signIn] = useMutation(SignInMutation)
+  const [signInMutation] = useMutation(SignInMutation)
 
   const handleSignIn = useCallback(
     async (values: any) => {
-      const res = await signIn({variables:{
+      const {data} = await signInMutation({variables:{
         email: values.email,
         password: values.password,
       }})
-      console.log(res)
+      console.log(data)
+      signIn({ userId:data.signIn.user.id, token:data.signIn.token })
       push("/home")
     },
-    [signIn,push],
+    [signIn,push,signInMutation],
   )  
 
   return (

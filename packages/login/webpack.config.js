@@ -34,6 +34,9 @@ module.exports = {
       name: "login",
       filename: "remoteEntry.js",
       library: { type: 'var', name: 'login' },
+      remotes: {
+        shell: "shell",
+      },
       exposes: {
         "./Login": "./src/Login/index",
       },
